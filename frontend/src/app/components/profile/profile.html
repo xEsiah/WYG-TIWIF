@@ -1,0 +1,48 @@
+<h2 class="profile-main-title">Mon Profil</h2>
+
+<div class="profile-container">
+  <div class="profile-card-static">
+    <div class="profile-avatar-frame">
+      <img [src]="user?.pfpUrl || avatars[0]" alt="Avatar" />
+    </div>
+
+    <div class="profile-avatar-selector">
+      <img
+        *ngFor="let av of avatars"
+        [src]="av"
+        (click)="changeAvatar(av)"
+        [class.active]="user?.pfpUrl === av"
+      />
+    </div>
+    <p class="profile-email">{{ user?.email }}</p>
+    <h3 class="profile-username">
+      {{ user?.username }}
+      <button
+        (click)="startEditName()"
+        type="button"
+        class="btn-step edit"
+        title="Modifier le pseudo"
+      >
+        ✎
+      </button>
+    </h3>
+    <div class="edit-overlay" *ngIf="isEditingName">
+      <div class="home-card edit-modal">
+        <h3>Modifier mon pseudo</h3>
+        <form (ngSubmit)="saveUsername()">
+          <input
+            [(ngModel)]="tempUsername"
+            name="newUsername"
+            placeholder="Nouveau pseudo"
+            required
+          />
+          <div class="modal-buttons">
+            <button type="submit" class="btn-important">Sauvegarder</button>
+            <button type="button" class="btn-cancel" (click)="cancelEditName()">Annuler</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <button (click)="logout()" class="profile-btn-logout">Déconnexion</button>
+</div>

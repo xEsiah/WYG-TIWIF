@@ -1,0 +1,54 @@
+<div *ngIf="authService.isLoggedIn()">
+  <h2>Tableau de bord</h2>
+
+  <div class="home-layout">
+    <aside class="home-sidebar">
+      <div class="home-profile-card">
+        <h3 class="home-title">Bonjour, {{ authService.getUsername() }} !</h3>
+        <button routerLink="/destinations" class="home-btn-main">Gérer mes voyages</button>
+      </div>
+    </aside>
+
+    <main class="home-main-content">
+      <div class="home-feed">
+        <div class="home-item-card" *ngIf="lastDest">
+          <div class="home-item-info">
+            <div class="home-item-location">
+              <h3 class="home-title">Dernière idée</h3>
+              <span class="home-badge">Récent</span>
+            </div>
+
+            <div class="home-item-location">
+              <p class="home-item-country">{{ lastDest.country }}</p>
+              <p class="home-item-cities">{{ lastDest.cities }}</p>
+            </div>
+          </div>
+          <div class="home-item-image">
+            <img [src]="lastDest.imageUrl" alt="Dernière destination" />
+          </div>
+        </div>
+
+        <div class="home-item-card home-item-card-full">
+          <div class="home-item-info">
+            <app-subscriptions></app-subscriptions>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<div *ngIf="!authService.isLoggedIn()">
+  <h2 class="home-title">Bienvenue sur WYG-TIWIF</h2>
+  <div class="home-guest-container">
+    <div class="home-guest-card">
+      <h2 class="home-guest-title">Prévoyez vos voyages de rêve !</h2>
+      <div class="home-guest-actions">
+        <button routerLink="/auth/register" class="home-btn-submit">S'inscrire</button>
+        <p class="home-guest-text" routerLink="/auth/login">
+          Déjà un compte ? <span>Se connecter</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

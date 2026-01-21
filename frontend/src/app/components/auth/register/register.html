@@ -1,0 +1,51 @@
+<h2>Merci de nous rejoindre !</h2>
+<div class="register-container">
+  <div>
+    <h2>Inscription</h2>
+
+    <div *ngIf="isLoading" class="spinner-wrapper">
+      <app-spinner></app-spinner>
+      <p *ngIf="!isError && message" class="feedback-message alert-success">{{ message }}</p>
+    </div>
+
+    <form *ngIf="!isLoading" (ngSubmit)="onRegister()">
+      <input
+        type="text"
+        name="username"
+        [(ngModel)]="username"
+        placeholder="Nom d'utilisateur"
+        required
+        class="form-control"
+      />
+      <input
+        type="email"
+        name="email"
+        [(ngModel)]="email"
+        placeholder="Email"
+        required
+        class="form-control"
+      />
+      <input
+        type="password"
+        name="password"
+        [(ngModel)]="password"
+        placeholder="Mot de passe"
+        required
+        class="form-control"
+      />
+      <input
+        type="password"
+        name="repeatPassword"
+        [(ngModel)]="repeatPassword"
+        placeholder="Confirmer le mot de passe"
+        required
+        class="form-control"
+      />
+
+      <button type="submit" class="btn-submit">S'inscrire</button>
+    </form>
+    <div *ngIf="!isLoading && isError && message" class="alert-error feedback-message">
+      {{ message }}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,32 @@
+<h2>Ravi de vous revoir !</h2>
+<div class="login-container">
+  <div>
+    <h2>Connexion</h2>
+    <div *ngIf="isLoading" class="spinner-container">
+      <app-spinner></app-spinner>
+      <p *ngIf="message">{{ message }}</p>
+    </div>
+    <form *ngIf="!isLoading" (ngSubmit)="onLogin()">
+      <input
+        type="email"
+        name="email"
+        [(ngModel)]="email"
+        placeholder="Email"
+        required
+        class="form-control"
+      />
+      <input
+        type="password"
+        name="password"
+        [(ngModel)]="password"
+        placeholder="Mot de passe"
+        required
+        class="form-control"
+      />
+      <button type="submit" class="btn-submit">Se connecter</button>
+    </form>
+    <div *ngIf="!isLoading && isError && message" class="feedback-message">
+      {{ message }}
+    </div>
+  </div>
+</div>

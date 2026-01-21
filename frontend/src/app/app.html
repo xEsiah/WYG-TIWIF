@@ -1,0 +1,38 @@
+<header class="main-header">
+  <h1><a routerLink="/"> WYG-TIWIF</a></h1>
+  <a routerLink="/"><img src="/icon.png" alt="Logo" /></a>
+
+  <nav *ngIf="authService.isLoggedIn()" class="nav-menu">
+    <a routerLink="/destinations" class="nav-item">
+      <span class="main-text">Mes destinations</span>
+      <span class="hover-text">Consulter</span>
+    </a>
+    <a routerLink="/profile" class="nav-item">
+      <span class="main-text">Mon profil</span>
+      <span class="hover-text">Modifier</span>
+    </a>
+    <a routerLink="/subscriptions" class="nav-item">
+      <span class="main-text">Mes suivis</span>
+      <span class="hover-text">Gérer</span>
+    </a>
+    <a routerLink="/auth/login" (click)="authService.logout()" class="nav-item">
+      <span class="main-text">Déconnexion</span>
+      <span class="hover-text">Bye bye</span>
+    </a>
+  </nav>
+
+  <nav *ngIf="!authService.isLoggedIn()" class="nav-menu">
+    <a routerLink="/auth/login" class="nav-item">
+      <span class="main-text">Connexion</span>
+      <span class="hover-text">Bon retour</span>
+    </a>
+    <a routerLink="/auth/register" class="nav-item">
+      <span class="main-text">Inscription</span>
+      <span class="hover-text">Bienvenue</span>
+    </a>
+  </nav>
+</header>
+
+<main>
+  <router-outlet></router-outlet>
+</main>

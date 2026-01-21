@@ -1,0 +1,59 @@
+<h2>Mes abonnements</h2>
+<div class="subscriptions-container">
+  <aside *ngIf="router.url !== '/'" class="side-panel">
+    <div class="home-card form-container">
+      <h3>Suivre un utilisateur</h3>
+
+      <div *ngIf="isLoading">
+        <p>Recherche en cours...</p>
+        <app-spinner></app-spinner>
+      </div>
+
+      <form *ngIf="!isLoading" (ngSubmit)="add()">
+        <input
+          [(ngModel)]="newSubscriptionUsername"
+          name="username"
+          placeholder="Nom d'utilisateur exact"
+          required
+        />
+        <button type="submit" class="btn-important" [disabled]="!newSubscriptionUsername">
+          Suivre !
+        </button>
+      </form>
+
+      <p
+        *ngIf="message"
+        [class.alert-error]="isError"
+        [class.alert-success]="!isError"
+        class="feedback-message"
+      >
+        {{ message }}
+      </p>
+    </div>
+  </aside>
+
+  <main class="content-panel">
+    <div *ngIf="isLoading" class="spinner-container"><app-spinner></app-spinner></div>
+
+    <div class="subscriptions-list" *ngIf="!isLoading">
+      <div *ngIf="subscriptions.length === 0" class="empty-state">
+        <p>Vous n'avez pas encore d'abonnements.</p>
+      </div>
+
+      <div *ngFor="let subscription of subscriptions" class="subscriptions-card">
+        <div class="subscriptions-info">
+          <img [src]="subscription.pfpUrl || 'assets/avatar1.png'" class="pfp-large" />
+          <div class="details">
+            <h3>{{ subscription.username }}</h3>
+            <span class="badge">^-^</span>
+          </div>
+        </div>
+        <div class="subscriptions-actions">
+          <button class="action-btn delete" (click)="delete(subscription._id)">
+            <i class="trash-icon">✕</i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

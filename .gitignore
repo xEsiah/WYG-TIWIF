@@ -1,0 +1,21 @@
+# --- DEPENDANCES (A ignorer absolument) ---
+node_modules/
+
+# --- SECURITE (Bonus +1 pt) ---
+.env
+environment.ts
+
+# --- ANGULAR (Frontend) ---
+frontend/dist/
+frontend/.angular/
+.angular/
+dist/
+
+# --- SYSTEME & IDE ---
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# --- LOGS ---
+*.log

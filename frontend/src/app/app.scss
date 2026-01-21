@@ -1,0 +1,94 @@
+/* =========================
+   HEADER (RENDER + IDENTITÉ)
+========================= */
+
+.main-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 24px 32px;
+  border-bottom: 1px solid var(--border);
+  background-color: var(--bg);
+}
+
+/* LOGO */
+.main-header img {
+  width: 56px;
+  transition: transform 0.25s ease;
+}
+
+.main-header img:hover {
+  transform: scale(1.15);
+}
+
+/* TITLE */
+.main-header h1 {
+  margin: 0;
+}
+
+.main-header h1 a {
+  font-family: 'Lemon', cursive;
+  font-size: 34px;
+  text-decoration: none;
+  color: var(--text);
+  letter-spacing: 2px;
+  transition:
+    color 0.25s ease,
+    transform 0.25s ease;
+  display: inline-block;
+}
+
+.main-header h1 a:hover {
+  color: var(--accent);
+  transform: scale(1.08);
+}
+
+/* NAV */
+.nav-menu {
+  display: flex;
+  gap: 28px;
+}
+
+.nav-item {
+  font-family: 'Lemon', cursive;
+  position: relative;
+  text-decoration: none;
+  color: var(--muted);
+  font-size: 15px;
+  font-weight: 500;
+  overflow: hidden;
+}
+
+.nav-item .main-text {
+  display: inline-block;
+  transition:
+    transform 0.25s ease,
+    color 0.25s ease;
+}
+
+.nav-item .hover-text {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translateY(120%);
+  font-size: 13px;
+  color: var(--accent);
+  transition: transform 0.25s ease;
+}
+
+.nav-item:hover .main-text {
+  transform: translateY(-120%);
+  color: var(--text);
+}
+
+.nav-item:hover .hover-text {
+  transform: translateY(0);
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .main-header {
+    flex-direction: column;
+    gap: 16px;
+  }
+}

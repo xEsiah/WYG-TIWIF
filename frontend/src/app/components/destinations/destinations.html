@@ -1,0 +1,146 @@
+<h2>Mes destinations</h2>
+<div class="destinations-container">
+  <aside class="side-panel">
+    <div class="home-card form-container">
+      <h3>Ajouter une destination</h3>
+      <div *ngIf="isLoading">
+        <p *ngIf="destinations.length > 0">{{ message || 'Enregistrement...' }}</p>
+        <app-spinner></app-spinner>
+      </div>
+      <form *ngIf="!isLoading" (ngSubmit)="add()">
+        <input
+          [(ngModel)]="newDest.country"
+          name="country"
+          placeholder="Pays"
+          required
+          (blur)="searchPhotos()"
+        />
+        <div class="image-suggestions" *ngIf="suggestedImages.length > 0">
+          <p>Choisissez une image :</p>
+          <div class="suggestion-grid">
+            <img
+              *ngFor="let url of suggestedImages"
+              [src]="url"
+              (click)="selectImage(url)"
+              [class.selected]="newDest.imageUrl === url"
+              alt="suggestion"
+            />
+          </div>
+        </div>
+        <div class="selected-preview" *ngIf="newDest.imageUrl && suggestedImages.length === 0">
+          <p>Image sélectionnée ✓</p>
+        </div>
+        <div class="budget-control">
+          <button type="button" class="btn-step" (click)="newDest.budget = newDest.budget - 100">
+            -
+          </button>
+          <input
+            [(ngModel)]="newDest.budget"
+            name="budget"
+            type="number"
+            placeholder="Budget (€)"
+            required
+          />
+          <button type="button" class="btn-step" (click)="newDest.budget = newDest.budget + 100">
+            +
+          </button>
+        </div>
+        <input
+          [(ngModel)]="newDest.cities"
+          name="cities"
+          placeholder="Villes (ex: Paris, Lyon, ...)"
+        />
+        <button type="submit" class="btn-important" [disabled]="!newDest.imageUrl">
+          Enregistrer
+        </button>
+      </form>
+      <p *ngIf="message" [style.color]="isError ? 'red' : 'green'">
+        {{ message }}
+      </p>
+    </div>
+  </aside>
+
+  <main class="content-panel">
+    <div *ngIf="isLoading && destinations.length === 0" class="spinner-container">
+      <app-spinner></app-spinner>
+    </div>
+
+    <div class="destinations-list" *ngIf="destinations.length > 0">
+      <div
+        *ngFor="let dest of destinations"
+        class="destination-card"
+        [class.visited]="dest.isVisited"
+      >
+        <div class="destination-info">
+          <div class="header-card">
+            <h3>{{ dest.country }}</h3>
+            <span class="badge" [class.visited]="dest.isVisited">
+              {{ dest.isVisited ? 'Visité' : 'Pas encore visité' }}
+            </span>
+          </div>
+          <p class="cities">{{ dest.cities.join(', ') }}</p>
+          <p class="budget">
+            Budget : <span>{{ dest.budget }} €</span>
+          </p>
+        </div>
+
+        <div class="destination-image">
+          <img [src]="dest.imageUrl" class="image-main" alt="destination" />
+        </div>
+
+        <div class="destination-actions">
+          <button class="action-btn" (click)="toggleVisited(dest)" title="Changer le statut">
+            <i class="check-icon">✓</i>
+          </button>
+          <button class="action-btn edit" (click)="startEdit(dest)" title="Modifier">
+            <i class="edit-icon">✎</i>
+          </button>
+          <button
+            class="action-btn delete"
+            (click)="dest._id && delete(dest._id)"
+            title="Supprimer"
+          >
+            <i class="trash-icon">✕</i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="!isLoading && destinations.length === 0" class="empty-state">
+      <p>Vous n'avez pas encore de destinations enregistrées.</p>
+    </div>
+  </main>
+
+  <div class="edit-overlay" *ngIf="editDest">
+    <div class="home-card edit-modal">
+      <h3>Modifier la destination</h3>
+      <form (ngSubmit)="saveUpdate()">
+        <input [(ngModel)]="editDest.country" name="eCountry" placeholder="Pays" required />
+        <div class="budget-control">
+          <button type="button" class="btn-step" (click)="editDest.budget = editDest.budget - 100">
+            -
+          </button>
+          <input
+            [(ngModel)]="editDest.budget"
+            name="eBudget"
+            type="number"
+            placeholder="Budget"
+            required
+          />
+          <button type="button" class="btn-step" (click)="editDest.budget = editDest.budget + 100">
+            +
+          </button>
+        </div>
+        <input
+          [(ngModel)]="editDest.cities"
+          name="eCities"
+          placeholder="Villes (Paris, Lyon, ...)"
+        />
+        <p>Note: L'image ne peut être modifiée que via l'ajout.</p>
+        <div class="modal-buttons">
+          <button type="submit" class="btn-important">Sauvegarder</button>
+          <button type="button" class="btn-cancel" (click)="cancelEdit()">Annuler</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
